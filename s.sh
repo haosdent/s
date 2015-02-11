@@ -31,7 +31,7 @@ _s() {
 
     local datafile="${_S_DATA:-$HOME/.s}"
 
-    # bail if we don't own ~/.z and $_Z_OWNER not set
+    # bail if we don't own ~/.s and $_S_OWNER not set
     [ -z "$_S_OWNER" -a -f "$datafile" -a ! -O "$datafile" ] && return
 
     # add entries
