@@ -79,7 +79,7 @@ _s() {
         if [ $? -ne 0 -a -f "$datafile" ]; then
             env rm -f "$tempfile"
         else
-            [ "$_Z_OWNER" ] && chown $_Z_OWNER:$(id -ng $_Z_OWNER) "$tempfile"
+            [ "$_S_OWNER" ] && chown $_S_OWNER:$(id -ng $_S_OWNER) "$tempfile"
             env mv -f "$tempfile" "$datafile" || env rm -f "$tempfile"
         fi
 
@@ -106,7 +106,7 @@ _s() {
             --) while [ "$1" ]; do shift; local fnd="$fnd${fnd:+ }$1";done;;
             -*) local opt=${1:1}; while [ "$opt" ]; do case ${opt:0:1} in
                     c) local fnd="^$PWD $fnd";;
-                    h) echo "${_Z_CMD:-z} [-chlrtx] args" >&2; return;;
+                    h) echo "${_S_CMD:-s} [-chlrtx] args" >&2; return;;
                     x) sed -i -e "\:^${PWD}|.*:d" "$datafile";;
                     l) local list=1;;
                     r) local typ="rank";;
@@ -202,7 +202,7 @@ _s() {
     fi
 }
 
-alias ${_Z_CMD:-z}='_z 2>&1'
+alias ${_S_CMD:-z}='_z 2>&1'
 
 [ "$_Z_NO_RESOLVE_SYMLINKS" ] || _Z_RESOLVE_SYMLINKS="-P"
 
