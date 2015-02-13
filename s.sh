@@ -202,13 +202,13 @@ _s() {
     fi
 }
 
-alias ${_S_CMD:-z}='_z 2>&1'
+alias ${_S_CMD:-s}='_s 2>&1'
 
-[ "$_Z_NO_RESOLVE_SYMLINKS" ] || _Z_RESOLVE_SYMLINKS="-P"
+[ "$_S_NO_RESOLVE_SYMLINKS" ] || _S_RESOLVE_SYMLINKS="-P"
 
 if compctl >/dev/null 2>&1; then
     # zsh
-    [ "$_Z_NO_PROMPT_COMMAND" ] || {
+    [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate directory list, avoid clobbering any other precmds.
         if [ "$_Z_NO_RESOLVE_SYMLINKS" ]; then
             _z_precmd() {
