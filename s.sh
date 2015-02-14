@@ -210,7 +210,7 @@ if compctl >/dev/null 2>&1; then
     # zsh
     [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate directory list, avoid clobbering any other precmds.
-        if [ "$_Z_NO_RESOLVE_SYMLINKS" ]; then
+        if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
             _z_precmd() {
                 _z --add "${PWD:a}"
             }
