@@ -211,25 +211,25 @@ if compctl >/dev/null 2>&1; then
     [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate directory list, avoid clobbering any other precmds.
         if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
-            _z_precmd() {
-                _z --add "${PWD:a}"
+            _s_precmd() {
+                _s --add "${PWD:a}"
             }
         else
-            _z_precmd() {
-                _z --add "${PWD:A}"
+            _s_precmd() {
+                _s --add "${PWD:A}"
             }
         fi
         [[ -n "${precmd_functions[(r)_z_precmd]}" ]] || {
-            precmd_functions[$(($#precmd_functions+1))]=_z_precmd
+            precmd_functions[$(($#precmd_functions+1))]=_s_precmd
         }
     }
-    _z_zsh_tab_completion() {
+    _s_zsh_tab_completion() {
         # tab completion
         local compl
         read -l compl
-        reply=(${(f)"$(_z --complete "$compl")"})
+        reply=(${(f)"$(_s --complete "$compl")"})
     }
-    compctl -U -K _z_zsh_tab_completion _z
+    compctl -U -K _s_zsh_tab_completion _s
 elif complete >/dev/null 2>&1; then
     # bash
     # tab completion
