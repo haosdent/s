@@ -1,10 +1,8 @@
-# Copyright (c) 2009 rupa deadwyler under the WTFPL license
-
 # maintains a jump-list of the directories you actually use
 #
 # INSTALL:
 #     * put something like this in your .bashrc/.zshrc:
-#         . /path/to/z.sh
+#         . /path/to/s.sh
 #     * cd around for a while to build up the db
 #     * PROFIT!!
 #     * optionally:
