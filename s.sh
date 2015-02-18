@@ -6,12 +6,12 @@
 #     * cd around for a while to build up the db
 #     * PROFIT!!
 #     * optionally:
-#         set $_Z_CMD in .bashrc/.zshrc to change the command (default z).
-#         set $_Z_DATA in .bashrc/.zshrc to change the datafile (default ~/.z).
-#         set $_Z_NO_RESOLVE_SYMLINKS to prevent symlink resolution.
-#         set $_Z_NO_PROMPT_COMMAND if you're handling PROMPT_COMMAND yourself.
-#         set $_Z_EXCLUDE_DIRS to an array of directories to exclude.
-#         set $_Z_OWNER to your username if you want use z while sudo with $HOME kept
+#         set $_S_CMD in .bashrc/.zshrc to change the command (default z).
+#         set $_S_DATA in .bashrc/.zshrc to change the datafile (default ~/.z).
+#         set $_S_NO_RESOLVE_SYMLINKS to prevent symlink resolution.
+#         set $_S_NO_PROMPT_COMMAND if you're handling PROMPT_COMMAND yourself.
+#         set $_S_EXCLUDE_DIRS to an array of directories to exclude.
+#         set $_S_OWNER to your username if you want use z while sudo with $HOME kept
 #
 # USE:
 #     * z foo     # cd to most frecent dir matching foo
