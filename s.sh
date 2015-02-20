@@ -209,16 +209,18 @@ if compctl >/dev/null 2>&1; then
     [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate directory list, avoid clobbering any other precmds.
         if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
-            _s_precmd() {
-                _s --add "${PWD:a}"
+            _s_preexec() {
+                echo $@
+                #_s --add "${PWD:a}"
             }
         else
-            _s_precmd() {
-                _s --add "${PWD:A}"
+            _s_preexec() {
+                echo $1
+                #_s --add "${PWD:A}"
             }
         fi
-        [[ -n "${precmd_functions[(r)_z_precmd]}" ]] || {
-            precmd_functions[$(($#precmd_functions+1))]=_s_precmd
+        [[ -n "${preexec_functions[(r)_s_preexec]}" ]] || {
+            preexec_functions[$(($#preexec_functions+1))]=_s_preexec
         }
     }
     _s_zsh_tab_completion() {
