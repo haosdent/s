@@ -36,8 +36,9 @@ _s() {
     if [ "$1" = "--add" ]; then
         shift
 
-        # $HOME isn't worth matching
-        [ "$*" = "$HOME" ] && return
+        # No start with ssh isn't worth matching
+        [ "${*:0:3}" != "ssh" ] && return
+        echo "$*"
 
         # don't track excluded dirs
         local exclude
@@ -210,13 +211,11 @@ if compctl >/dev/null 2>&1; then
         # populate directory list, avoid clobbering any other precmds.
         if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
             _s_preexec() {
-                echo $@
-                #_s --add "${PWD:a}"
+                _s --add $1
             }
         else
             _s_preexec() {
-                echo $1
-                #_s --add "${PWD:A}"
+                _s --add $1
             }
         fi
         [[ -n "${preexec_functions[(r)_s_preexec]}" ]] || {
