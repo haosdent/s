@@ -40,7 +40,7 @@ _s() {
         [ "${*:0:3}" != "ssh" ] && return
         echo "$*"
 
-        # don't track excluded dirs
+        # don't track excluded hosts
         local exclude
         for exclude in "${_S_EXCLUDE_DIRS[@]}"; do
             [ "$*" = "$exclude" ] && return
