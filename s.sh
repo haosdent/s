@@ -38,12 +38,13 @@ _s() {
 
         # No start with ssh isn't worth matching
         [ "${*:0:3}" != "ssh" ] && return
-        echo "$*"
+        target=$(echo $*|perl -n -e '/ (\w+@)*(\S+)/ && print $2')
+        echo $target
 
         # don't track excluded hosts
         local exclude
-        for exclude in "${_S_EXCLUDE_DIRS[@]}"; do
-            [ "$*" = "$exclude" ] && return
+        for exclude in "${_S_EXCLUDE_HOSTS[@]}"; do
+            [ "$target" = "$exclude" ] && return
         done
 
         # maintain the data file
