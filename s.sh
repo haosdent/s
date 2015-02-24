@@ -38,8 +38,7 @@ _s() {
 
         # No start with ssh isn't worth matching
         [ "${*:0:3}" != "ssh" ] && return
-        target=$(echo $*|perl -n -e '/ (\w+@)*(\S+)/ && print $2')
-        echo $target
+        target=$(echo $*|perl -n -e '/ (\S+)/ && print $1')
 
         # don't track excluded hosts
         local exclude
@@ -50,9 +49,9 @@ _s() {
         # maintain the data file
         local tempfile="$datafile.$RANDOM"
         while read line; do
-            # only count directories
+            # only count hosts
             [ -d "${line%%\|*}" ] && echo $line
-        done < "$datafile" | awk -v path="$*" -v now="$(date +%s)" -F"|" '
+        done < "$datafile" | awk -v path="$target" -v now="$(date +%s)" -F"|" '
             BEGIN {
                 rank[path] = 1
                 time[path] = now
@@ -125,9 +124,9 @@ _s() {
         # no file yet
         [ -f "$datafile" ] || return
 
-        local cd
-        cd="$(while read line; do
-            [ -d "${line%%\|*}" ] && echo $line
+        local host
+        host="$(while read line; do
+            echo $line
         done < "$datafile" | awk -v t="$(date +%s)" -v list="$list" -v typ="$typ" -v q="$fnd" -F"|" '
             function frecent(rank, time) {
                 # relate frequency and time
@@ -198,7 +197,7 @@ _s() {
             }
         ')"
         [ $? -gt 0 ] && return
-        [ "$cd" ] && cd "$cd"
+        [ "$host" ] && ssh "$host"
     fi
 }
 
