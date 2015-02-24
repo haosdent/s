@@ -209,7 +209,7 @@ alias ${_S_CMD:-s}='_s 2>&1'
 if compctl >/dev/null 2>&1; then
     # zsh
     [ "$_S_NO_PROMPT_COMMAND" ] || {
-        # populate directory list, avoid clobbering any other precmds.
+        # populate host list, avoid clobbering any other precmds.
         if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
             _s_preexec() {
                 _s --add $1
