@@ -111,7 +111,6 @@ _s() {
                 esac; opt=${opt:1}; done;;
              *) local fnd="$fnd${fnd:+ }$1";;
         esac; local last=$1; shift; done
-        local list=1
 
         # no file yet
         [ -f "$datafile" ] || return
