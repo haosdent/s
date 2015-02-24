@@ -1,4 +1,6 @@
-# maintains a jump-list of the directories you actually use
+# Copyright (c) 2015 haosdent under the WTFPL license
+
+# maintains a jump-list of the hosts you actually use
 #
 # INSTALL:
 #     * put something like this in your .bashrc/.zshrc:
@@ -8,7 +10,6 @@
 #     * optionally:
 #         set $_S_CMD in .bashrc/.zshrc to change the command (default s).
 #         set $_S_DATA in .bashrc/.zshrc to change the datafile (default ~/.s).
-#         set $_S_NO_RESOLVE_SYMLINKS to prevent symlink resolution.
 #         set $_S_NO_PROMPT_COMMAND if you're handling PROMPT_COMMAND yourself.
 #         set $_S_EXCLUDE_HOSTS to an array of directories to exclude.
 #         set $_S_OWNER to your username if you want use s while sudo with $HOME kept
@@ -110,13 +111,7 @@ _s() {
                 esac; opt=${opt:1}; done;;
              *) local fnd="$fnd${fnd:+ }$1";;
         esac; local last=$1; shift; done
-        [ "$fnd" -a "$fnd" != "^$PWD " ] || local list=1
-
-        # if we hit enter on a completion just go there
-        case "$last" in
-            # completions will always start with /
-            /*) [ -z "$list" -a -d "$last" ] && cd "$last" && return;;
-        esac
+        local list=1
 
         # no file yet
         [ -f "$datafile" ] || return
@@ -200,21 +195,13 @@ _s() {
 
 alias ${_S_CMD:-s}='_s 2>&1'
 
-[ "$_S_NO_RESOLVE_SYMLINKS" ] || _S_RESOLVE_SYMLINKS="-P"
-
 if compctl >/dev/null 2>&1; then
     # zsh
     [ "$_S_NO_PROMPT_COMMAND" ] || {
-        # populate host list, avoid clobbering any other precmds.
-        if [ "$_S_NO_RESOLVE_SYMLINKS" ]; then
-            _s_preexec() {
-                _s --add $1
-            }
-        else
-            _s_preexec() {
-                _s --add $1
-            }
-        fi
+        # populate host list, avoid clobbering any other preexecs.
+        _s_preexec() {
+            _s --add $1
+        }
         [[ -n "${preexec_functions[(r)_s_preexec]}" ]] || {
             preexec_functions[$(($#preexec_functions+1))]=_s_preexec
         }
