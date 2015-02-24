@@ -6,20 +6,19 @@
 #     * cd around for a while to build up the db
 #     * PROFIT!!
 #     * optionally:
-#         set $_S_CMD in .bashrc/.zshrc to change the command (default z).
-#         set $_S_DATA in .bashrc/.zshrc to change the datafile (default ~/.z).
+#         set $_S_CMD in .bashrc/.zshrc to change the command (default s).
+#         set $_S_DATA in .bashrc/.zshrc to change the datafile (default ~/.s).
 #         set $_S_NO_RESOLVE_SYMLINKS to prevent symlink resolution.
 #         set $_S_NO_PROMPT_COMMAND if you're handling PROMPT_COMMAND yourself.
-#         set $_S_EXCLUDE_DIRS to an array of directories to exclude.
-#         set $_S_OWNER to your username if you want use z while sudo with $HOME kept
+#         set $_S_EXCLUDE_HOSTS to an array of directories to exclude.
+#         set $_S_OWNER to your username if you want use s while sudo with $HOME kept
 #
 # USE:
-#     * z foo     # cd to most frecent dir matching foo
-#     * z foo bar # cd to most frecent dir matching foo and bar
-#     * z -r foo  # cd to highest ranked dir matching foo
-#     * z -t foo  # cd to most recently accessed dir matching foo
-#     * z -l foo  # list matches instead of cd
-#     * z -c foo  # restrict matches to subdirs of $PWD
+#     * s foo     # ssh to most frecent host matching foo
+#     * s foo bar # ssh to most frecent host matching foo and bar
+#     * s -r foo  # ssh to highest ranked host matching foo
+#     * s -t foo  # ssh to most recently accessed host matching foo
+#     * s -l foo  # list matches instead of ssh
 
 [ -d "${_S_DATA:-$HOME/.s}" ] && {
     echo "ERROR: s.sh's datafile (${_S_DATA:-$HOME/.s}) is a directory."
@@ -50,7 +49,7 @@ _s() {
         local tempfile="$datafile.$RANDOM"
         while read line; do
             # only count hosts
-            [ -d "${line%%\|*}" ] && echo $line
+            echo $line
         done < "$datafile" | awk -v path="$target" -v now="$(date +%s)" -F"|" '
             BEGIN {
                 rank[path] = 1
@@ -85,7 +84,7 @@ _s() {
     # tab completion
     elif [ "$1" = "--complete" -a -s "$datafile" ]; then
         while read line; do
-            [ -d "${line%%\|*}" ] && echo $line
+            echo $line
         done < "$datafile" | awk -v q="$2" -F"|" '
             BEGIN {
                 if( q == tolower(q) ) imatch = 1
@@ -104,9 +103,7 @@ _s() {
         while [ "$1" ]; do case "$1" in
             --) while [ "$1" ]; do shift; local fnd="$fnd${fnd:+ }$1";done;;
             -*) local opt=${1:1}; while [ "$opt" ]; do case ${opt:0:1} in
-                    c) local fnd="^$PWD $fnd";;
-                    h) echo "${_S_CMD:-s} [-chlrtx] args" >&2; return;;
-                    x) sed -i -e "\:^${PWD}|.*:d" "$datafile";;
+                    h) echo "${_S_CMD:-s} [-hlrt] args" >&2; return;;
                     l) local list=1;;
                     r) local typ="rank";;
                     t) local typ="recent";;
