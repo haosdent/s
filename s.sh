@@ -38,7 +38,7 @@ _s() {
 
         # No start with ssh isn't worth matching
         [ "${*:0:3}" != "ssh" ] && return
-        target=$(echo $*|perl -n -e '/ (\S+)/ && print $1')
+        target=$(echo $*|perl -n -e '/ +(.+)/ && print $1')
 
         # don't track excluded hosts
         local exclude
@@ -199,7 +199,7 @@ if compctl >/dev/null 2>&1; then
     [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate host list, avoid clobbering any other preexecs.
         _s_preexec() {
-            _s --add $1
+            _s --add $3
         }
         [[ -n "${preexec_functions[(r)_s_preexec]}" ]] || {
             preexec_functions[$(($#preexec_functions+1))]=_s_preexec
