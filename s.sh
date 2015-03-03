@@ -188,7 +188,7 @@ _s() {
             }
         ')"
         [ $? -gt 0 ] && return
-        [ "$host" ] && ssh "$host"
+        [ "$host" ] && eval "ssh $host"
     fi
 }
 
