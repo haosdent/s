@@ -37,7 +37,8 @@ _s() {
         shift
 
         # No start with ssh isn't worth matching
-        [ "${*:0:3}" != "ssh" ] && return
+        args=$*
+        [ "${args:0:3}" != "ssh" ] && return
         target=$(echo $*|perl -n -e '/ +(.+)/ && print $1')
 
         # don't track excluded hosts
@@ -219,7 +220,7 @@ elif complete >/dev/null 2>&1; then
     [ "$_S_NO_PROMPT_COMMAND" ] || {
         # populate directory list. avoid clobbering other PROMPT_COMMANDs.
         grep "_s --add" <<< "$PROMPT_COMMAND" >/dev/null || {
-            PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''_s --add "$(command pwd '$_S_RESOLVE_SYMLINKS' 2>/dev/null)" 2>/dev/null;'
+            PROMPT_COMMAND="$PROMPT_COMMAND"$'\n''_s --add `history 1 | sed -e "s/^[ ]*[0-9]*[ ]*//"` 2>/dev/null;'
         }
     }
 fi
