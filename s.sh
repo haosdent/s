@@ -5,7 +5,7 @@
 # INSTALL:
 #     * put something like this in your .bashrc/.zshrc:
 #         . /path/to/s.sh
-#     * cd around for a while to build up the db
+#     * ssh around for a while to build up the db
 #     * PROFIT!!
 #     * optionally:
 #         set $_S_CMD in .bashrc/.zshrc to change the command (default s).
