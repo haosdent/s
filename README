@@ -20,6 +20,13 @@ DESCRIPTION
 
        For example, s foo bar would match foobar but not barfoo.
 
+INSTALL
+       OS X
+              brew tap haosdent/s && brew install s
+       Linux
+              wget https://raw.githubusercontent.com/haosdent/s/master/s.sh
+              add source path/to/s.sh to $HOME/.bashrc or $HOME/.zshrc
+
 OPTIONS
 
        -h     show a brief help message
