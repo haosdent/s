@@ -132,7 +132,7 @@ FILES
        A man page (s.1) is provided.
 
 SEE ALSO
-       regex(7), pushd, popd, autojump, cdargs
+       regex(7), ssh
 
        Please file bugs at https://github.com/haosdent/s/
 
