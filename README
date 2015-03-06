@@ -12,7 +12,7 @@ AVAILABILITY
        bash, zsh
 
 DESCRIPTION
-       Tracks your most used hosts, based on 'frecency'.
+       Tracks your most used hosts, based on 'frecency'(http://en.wikipedia.org/wiki/Frecency).
 
        After  a  short  learning  phase, s will take you to the most 'frecent'
        host that matches ALL of the regexes given on the command line, in
